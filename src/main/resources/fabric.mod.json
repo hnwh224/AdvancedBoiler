@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "advancedboiler",
+	"version": "${version}",
+	"name": "AdvancedBoiler",
+	"description": "",
+	"authors": [],
+	"contact": {},
+	"license": "MIT",
+	"icon": "assets/advancedboiler/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"xyz.hnwh.advancedboiler.client.AdvancedboilerClient"
+		],
+		"main": [
+			"xyz.hnwh.advancedboiler.Advancedboiler"
+		],
+		"voicechat": [
+			"xyz.hnwh.advancedboiler.client.SimpleVoiceChatPlugin"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=${loader_version}",
+		"fabric": "*",
+		"minecraft": "${minecraft_version}",
+		"voicechat": ">=${minecraft_version}-2.5.27"
+	}
+}
