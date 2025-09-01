@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
     id 'com.gradleup.shadow' version '8.3.0'
 }
@@ -57,8 +57,8 @@ dependencies {
     shadow implementation("uk.co.caprica:vlcj:4.8.3")
     implementation("de.maxhenkel.voicechat:voicechat-api:${project.voicechat_api_version}")
 
-    modRuntimeOnly "maven.modrinth:simple-voice-chat:fabric-1.21.4-2.5.27"
-    modRuntimeOnly "maven.modrinth:modmenu:13.0.0"
+    modRuntimeOnly "maven.modrinth:simple-voice-chat:fabric-1.21.8-2.5.36"
+    modRuntimeOnly "maven.modrinth:modmenu:15.0.0-beta.3"
 
     modImplementation "io.wispforest:owo-lib:${project.owo_version}"
     include "io.wispforest:owo-sentinel:${project.owo_version}"

@@ -59,17 +59,20 @@ public class AdvancedboilerClient implements ClientModInitializer {
         // Sent by server if boiler plugin is installed
         PayloadTypeRegistry.playS2C().register(BoilerHandshakeRequest.ID, BoilerHandshakeRequest.CODEC);
         ClientPlayNetworking.registerGlobalReceiver(BoilerHandshakeRequest.ID, (payload, context) -> {
+            System.out.println("Handshake recieved");
             ClientPlayNetworking.send(new BoilerHandshakeResponse(true));
         });
 
         // Sent on display remove/unload
         PayloadTypeRegistry.playS2C().register(BoilerDisplayRemovePayload.ID, BoilerDisplayRemovePayload.CODEC);
         ClientPlayNetworking.registerGlobalReceiver(BoilerDisplayRemovePayload.ID, (payload, context) -> {
+            System.out.println("Display removed");
             displayManager.removeDisplay(payload.displayId);
         });
 
         PayloadTypeRegistry.playS2C().register(BoilerDisplayCreatePayload.ID, BoilerDisplayCreatePayload.CODEC);
         ClientPlayNetworking.registerGlobalReceiver(BoilerDisplayCreatePayload.ID, (payload, context) -> {
+            System.out.println("Display created");
             int displayId = payload.displayId;
             Vec3i pos1 = new Vec3i(payload.pos[0], payload.pos[1], payload.pos[2]);
             Vec3i pos2 = new Vec3i(payload.pos[3], payload.pos[4], payload.pos[5]);

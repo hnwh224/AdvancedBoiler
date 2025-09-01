@@ -1,9 +1,18 @@
 package xyz.hnwh.advancedboiler.client;
 
+import com.mojang.blaze3d.pipeline.BlendFunction;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.systems.GpuDevice;
+import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.textures.GpuTexture;
+import com.mojang.blaze3d.textures.GpuTextureView;
+import com.mojang.blaze3d.textures.TextureFormat;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.render.*;
+import net.minecraft.client.texture.GlTextureView;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
@@ -23,7 +32,12 @@ public class DisplayRenderHelper {
 
             if(display.getStreamState().equals(StreamState.ONLINE)) {
                 display.getRenderer().paint();
-                RenderSystem.setShaderTexture(0, display.getRenderer().getTextureID());
+                GpuDevice gpuDevice = RenderSystem.getDevice();
+                GpuTexture gpuTexture = gpuDevice.createTexture("screen", GpuTexture.USAGE_TEXTURE_BINDING, TextureFormat.RGBA8, display.getWidth(), display.getHeight(), 0, 1);
+                GpuTextureView gpuTextureView = gpuDevice.createTextureView(gpuTexture);
+                RenderSystem.setShaderTexture(0, gpuTextureView);
+
+                //RenderSystem.setShaderTexture(0, display.getRenderer().getTextureID());
                 RenderSystem.setShader(ShaderProgramKeys.POSITION_TEX);
                 buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
             } else {
@@ -144,6 +158,11 @@ public class DisplayRenderHelper {
 
 
             BufferRenderer.drawWithGlobalProgram(buffer.end());
+            RenderPipeline pipeline = RenderPipeline.builder()
+                    .withBlend(BlendFunction.OVERLAY)
+                    .build();
+
+            RenderSystem.setShaderTexture();
         }
     }
 

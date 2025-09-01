@@ -48,10 +48,10 @@ public class DisplayRenderer {
         this.blockWidth = blockWidth;
         this.blockHeight = blockHeight;
         textureID[0] = glGenTextures();
-        RenderSystem.bindTexture(textureID[0]);
-        RenderSystem.texParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        RenderSystem.texParameter(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        RenderSystem.bindTexture(0);
+        glBindTexture(GL_TEXTURE_2D, textureID[0]);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         width = 1920;
         height = 1080;
@@ -159,10 +159,15 @@ public class DisplayRenderer {
         //System.out.println("drawing");
         if (textureID[0] == 0) return;
 
-        RenderSystem.bindTexture(textureID[0]);
-        RenderSystem.pixelStore(GL_UNPACK_ROW_LENGTH, width);
-        RenderSystem.pixelStore(GL_UNPACK_SKIP_PIXELS, 0);
-        RenderSystem.pixelStore(GL_UNPACK_SKIP_ROWS, 0);
+        glBindTexture(GL_TEXTURE_2D, textureID[0]);
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, width);
+        glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
+        glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
+
+        //RenderSystem.bindTexture(textureID[0]);
+        //RenderSystem.pixelStore(GL_UNPACK_ROW_LENGTH, width);
+        //RenderSystem.pixelStore(GL_UNPACK_SKIP_PIXELS, 0);
+        //RenderSystem.pixelStore(GL_UNPACK_SKIP_ROWS, 0);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
                 GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, byteBuffer);
 
